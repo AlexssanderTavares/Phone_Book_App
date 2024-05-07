@@ -3,17 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="#9ECAD0"
     android:layout_width="match_parent"
+    android:background="@color/appLogoBG"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
-
-    <ImageView
-        android:src="@drawable/telephoneWpp"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="40dp"
-        android:layout_alignParentTop="true"/>
+    tools:context=".SignUpActivity">
 
     <LinearLayout
         android:background="@color/white"
@@ -34,6 +27,24 @@
             android:textSize="18dp" />
 
         <EditText
+            android:drawableStart="@drawable/baseline_person_24"
+            android:id="@+id/edit_user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/user_email"
+            android:textSize="18dp" />
+
+        <EditText
+            android:drawableStart="@drawable/baseline_person_24"
+            android:id="@+id/confirm_user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/confirm_email"
+            android:textSize="18dp" />
+
+        <EditText
             android:drawableStart="@drawable/baseline_lock_24"
             android:id="@+id/edit_password"
             android:layout_width="match_parent"
@@ -42,47 +53,33 @@
             android:hint="@string/Password"
             android:textSize="18dp" />
 
+        <EditText
+            android:drawableStart="@drawable/baseline_lock_24"
+            android:id="@+id/confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/confPassword"
+            android:textSize="18dp" />
+
         <CheckBox
-            android:id="@+id/checkbox_logged"
+            android:id="@+id/checkbox_agree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/keep_me_logged_in" />
-
+            android:text="@string/therms_agreement" />
 
         <Button
-            android:id="@+id/button_login"
+            android:id="@+id/button_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/Login" />
+            android:text="@string/Register" />
+
+
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/sign_up_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="30dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:text="@string/dont_have_account"
-        android:textSize="18dp" />
-
-    <TextView
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:id="@+id/recover_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/sign_up_text"
-        android:layout_margin="30dp"
-        android:gravity="center"
-        android:text="@string/recover_password"
-        android:textSize="18dp" />
 
 
 </RelativeLayout>

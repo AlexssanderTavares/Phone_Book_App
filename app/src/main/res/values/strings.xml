@@ -6,4 +6,9 @@
     <string name="keep_me_logged_in">Keep me logged-in</string>
     <string name="dont_have_account">Don\'t have account? Sign Up!</string>
     <string name="recover_password">Don\'t remember your password?</string>
+    <string name="confPassword">Confirm Password</string>
+    <string name="therms_agreement">Do you agree with our therms and policy.</string>
+    <string name="Register">Register</string>
+    <string name="user_email">User Email</string>
+    <string name="confirm_email">Confirm Email</string>
 </resources>

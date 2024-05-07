@@ -6,15 +6,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.app_phone_book.databinding.ActivityLoginBinding
+import com.example.app_phone_book.databinding.ActivitySignUpBinding
 
-class LoginActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding:ActivitySignUpBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -22,18 +22,10 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
-        binding.buttonLogin.setOnClickListener {
-
+        binding.buttonRegister.setOnClickListener {
+            //validate form and start login activity
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
-
-        binding.signUpText.setOnClickListener {
-            startActivity(Intent(this, SignUpActivity::class.java))
-        }
-
-        binding.recoverText.setOnClickListener {
-
-        }
-
-
     }
 }
