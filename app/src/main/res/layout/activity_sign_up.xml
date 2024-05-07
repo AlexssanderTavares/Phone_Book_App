@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:background="@color/appLogoBG"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    tools:context=".UI.SignUpActivity">
 
     <LinearLayout
         android:background="@color/white"

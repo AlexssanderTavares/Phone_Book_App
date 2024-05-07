@@ -6,7 +6,7 @@
     android:background="#9ECAD0"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".UI.LoginActivity">
 
     <ImageView
         android:src="@drawable/telephoneWpp"

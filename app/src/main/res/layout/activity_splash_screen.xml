@@ -8,7 +8,7 @@
     android:background="@color/appLogoBG"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreenActivity">
+    tools:context=".UI.SplashScreenActivity">
 
     <ImageView
         android:layout_width="match_parent"
