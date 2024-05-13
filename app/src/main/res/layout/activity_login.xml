@@ -9,7 +9,7 @@
     tools:context=".UI.LoginActivity">
 
     <ImageView
-        android:src="@drawable/telephoneWpp"
+        android:src="@drawable/telephone_wpp"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="40dp"

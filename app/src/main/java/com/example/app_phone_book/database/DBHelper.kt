@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.app_phone_book.Model.User
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -59,12 +60,12 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
 
     }
 
-    fun getUser(id: Int, userName: String, userEmail: String, userPass: String): Boolean {
+    fun loginUser(userName: String, userEmail: String, userPass: String): Boolean {
         val db = readableDatabase
         if(this.verifyEmail(userEmail)) {
             val cursor = db.rawQuery(
-                "SELECT * FROM users WHERE id = ? AND userName = ? AND userEmail = ? AND password = ?",
-                arrayOf(id.toString(), userName, userEmail, userPass)
+                "SELECT * FROM users WHERE userName = ? AND userEmail = ? AND password = ?",
+                arrayOf(userName, userEmail, userPass)
             )
 
             return if (cursor.count == 1) {
@@ -78,6 +79,29 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
             return false
         }
     }
+
+    fun selectUser(userName: String, userEmail: String) : User? {
+        val db = this.readableDatabase
+        if(this.verifyEmail(userEmail)){
+            val cursor = db.rawQuery("SELECT * FROM users WHERE userName = ? AND userEmail = ?", arrayOf(userName,userEmail))
+            lateinit var user: User
+
+            if(cursor.count == 1){
+
+                val idIndex = cursor.getColumnIndex("id")
+                val userNameIndex = cursor.getColumnIndex("userName")
+                val userEmailIndex = cursor.getColumnIndex("userEmail")
+
+                user = User(id = cursor.getInt(idIndex), userName = cursor.getString(userNameIndex), cursor.getString(userEmailIndex))
+
+            }
+            db.close()
+            return user
+        }else{
+            return null
+        }
+    }
+
 
     fun updateUserName(id: Int, newUserName: String): Int {
         val db = writableDatabase

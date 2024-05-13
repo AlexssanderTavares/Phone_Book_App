@@ -11,4 +11,9 @@
     <string name="Register">Register</string>
     <string name="user_email">User Email</string>
     <string name="confirm_email">Confirm Email</string>
+    <string name="e_mail_fields_doesn_t_match">E-Mail fields doesn\'t match!</string>
+    <string name="password_fields_doesn_t_match">Password fields doesn\'t match!</string>
+    <string name="no_blank_fields_allowed">No Blank fields allowed!</string>
+    <string name="sign_up_ok">Sign-Up Ok!</string>
+    <string name="you_must_agree_with_our_therms_and_policy">You must agree with our Therms and Policy</string>
 </resources>

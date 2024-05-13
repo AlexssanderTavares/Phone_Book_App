@@ -4,62 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="@color/appLogoBG"
     android:layout_height="match_parent"
+    android:background="@color/appLogoBG"
     tools:context=".UI.SignUpActivity">
 
     <LinearLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:padding="10dp"
         android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:layout_margin="8dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <EditText
-            android:drawableStart="@drawable/baseline_person_24"
             android:id="@+id/edit_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:drawableStart="@drawable/baseline_person_24"
             android:hint="@string/Username"
             android:textSize="18dp" />
 
         <EditText
-            android:drawableStart="@drawable/baseline_person_24"
             android:id="@+id/edit_user_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:drawableStart="@drawable/baseline_person_24"
             android:hint="@string/user_email"
             android:textSize="18dp" />
 
         <EditText
-            android:drawableStart="@drawable/baseline_person_24"
             android:id="@+id/confirm_user_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:drawableStart="@drawable/baseline_person_24"
             android:hint="@string/confirm_email"
             android:textSize="18dp" />
 
         <EditText
-            android:drawableStart="@drawable/baseline_lock_24"
             android:id="@+id/edit_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:drawableStart="@drawable/baseline_lock_24"
             android:hint="@string/Password"
+            android:inputType="textPassword"
             android:textSize="18dp" />
 
         <EditText
-            android:drawableStart="@drawable/baseline_lock_24"
             android:id="@+id/confirm_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:drawableStart="@drawable/baseline_lock_24"
             android:hint="@string/confPassword"
+            android:inputType="textPassword"
             android:textSize="18dp" />
 
         <CheckBox
@@ -79,7 +81,6 @@
 
 
     </LinearLayout>
-
 
 
 </RelativeLayout>
