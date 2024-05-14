@@ -16,4 +16,7 @@
     <string name="no_blank_fields_allowed">No Blank fields allowed!</string>
     <string name="sign_up_ok">Sign-Up Ok!</string>
     <string name="you_must_agree_with_our_therms_and_policy">You must agree with our Therms and Policy</string>
+    <string name="you_must_fill_the_fields_in_order_to_be_able_to_login">You must fill the fields in order to be able to login</string>
+    <string name="e_mail">E-Mail</string>
+    <string name="user_not_already_registered">User not already registered!</string>
 </resources>

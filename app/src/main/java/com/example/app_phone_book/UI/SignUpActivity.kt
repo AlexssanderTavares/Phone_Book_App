@@ -53,10 +53,9 @@ class SignUpActivity : AppCompatActivity() {
 
                     val res = db.createUser(userName,userEmail,password)
 
-                    if(res !!> 0 && res != null){
+                    if(res!! > 0 && res != null){
                         Toast.makeText(this, getString(R.string.sign_up_ok), Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
                     }
 
                 }else{

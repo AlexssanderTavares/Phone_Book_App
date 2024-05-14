@@ -34,6 +34,15 @@
             android:textSize="18dp" />
 
         <EditText
+            android:drawableStart="@drawable/baseline_person_24"
+            android:id="@+id/edit_user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/e_mail"
+            android:textSize="18dp" />
+
+        <EditText
             android:drawableStart="@drawable/baseline_lock_24"
             android:id="@+id/edit_password"
             android:layout_width="match_parent"
