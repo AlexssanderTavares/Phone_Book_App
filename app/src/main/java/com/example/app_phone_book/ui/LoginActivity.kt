@@ -1,4 +1,4 @@
-package com.example.app_phone_book.UI
+package com.example.app_phone_book.ui
 
 import android.content.Context
 import android.content.Intent
@@ -34,18 +34,21 @@ class LoginActivity : AppCompatActivity() {
         sharedPreferences = application.getSharedPreferences("login", Context.MODE_PRIVATE)
 
         binding.buttonLogin.setOnClickListener {
-            val loginUserName = binding.editUserName.text.toString().trim()
-            val loginEmail = binding.editUserEmail.text.toString().trim()
-            val loginPass = binding.editPassword.text.toString().trim()
+            val loginUserName = binding.editUserName.text.toString()
+            val loginEmail = binding.editUserEmail.text.toString()
+            val loginPass = binding.editPassword.text.toString()
             val keeper = binding.checkboxLogged.isChecked
 
             if(loginUserName.isNotEmpty() && loginPass.isNotEmpty()){
+
                 if(db.loginUser(loginUserName, loginEmail, loginPass)){
+
                     if(keeper){
-                        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                        val editor: SharedPreferences.Editor = this.sharedPreferences.edit()
                         editor.putString("username", loginUserName)
                         editor.apply()
                     }
+
                     startActivity(Intent(this, MainActivity::class.java))
                 }else{
                     Toast.makeText(applicationContext,
@@ -65,9 +68,12 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
 
+        /* must be implemented
         binding.recoverText.setOnClickListener {
 
         }
+
+         */
 
 
     }

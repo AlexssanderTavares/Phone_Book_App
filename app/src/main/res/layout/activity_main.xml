@@ -6,7 +6,7 @@
     android:background="@color/appLogoBG"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.MainActivity">
+    tools:context=".ui.MainActivity">
     
     <ListView
         android:id="@+id/list_view_contacts"

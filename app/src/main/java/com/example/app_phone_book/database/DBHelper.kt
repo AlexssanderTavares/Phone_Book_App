@@ -6,14 +6,13 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.app_phone_book.Model.User
 import kotlin.random.Random
-import kotlin.random.nextInt
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", null, 1) {
 
     val sqlCommands = arrayOf(
-        "CREATE TABLE users(id INTEGER PRIMARY KEY NOT NULL, userName TEXT NOT NULL, userEmail TEXT NOT NULL, password TEXT NOT NULL)",
+        "CREATE TABLE users(id TEXT PRIMARY KEY NOT NULL, userName TEXT UNIQUE NOT NULL, userEmail TEXT NOT NULL, password TEXT NOT NULL)",
         "CREATE TABLE contacts(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL, address TEXT",
-        "INSERT INTO users(id, userName, userMail, password) VALUES (0, teste, teste@teste.com, teste123"
+        //"INSERT INTO users(id, userName, userMail, password) VALUES (${this.idGenerator()}, teste, teste@teste.com, teste123"
     )
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -34,7 +33,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
         val contentValues = ContentValues()
 
         if(this.verifyEmail(userEmail)) {
-            val id = Random.nextInt(0..10000)
+            val id = this.idGenerator()
             contentValues.put("userId", id)
             contentValues.put("userName", userName)
             contentValues.put("userEmail", userEmail)
@@ -42,7 +41,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
 
             val cursor = db.rawQuery(
                 "SELECT * FROM users WHERE id = ? AND userName = ? AND userEmail = ? AND password = ?",
-                arrayOf(id.toString(), userName, userEmail, pass)
+                arrayOf(id, userName, userEmail, pass)
             )
 
             if (cursor.count == 0) {
@@ -61,7 +60,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
     }
 
     fun loginUser(userName: String, userEmail: String, userPass: String): Boolean {
-        val db = readableDatabase
+        val db = this.readableDatabase
         if(this.verifyEmail(userEmail)) {
             val cursor = db.rawQuery(
                 "SELECT * FROM users WHERE userName = ? AND userEmail = ? AND password = ?",
@@ -220,7 +219,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
 
     // END of CRUDs
 
-    fun verifyEmail(email:String) : Boolean {
+    private fun verifyEmail(email:String) : Boolean {
         return if(email.contains("@")){
             true
         }else{
@@ -228,7 +227,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
         }
     }
 
-    fun toBRPhoneFormat(phone: Int) : String {
+    private fun toBRPhoneFormat(phone: Int) : String {
         val phone = phone.toString()
         if (phone.length == 11) {
             val res = "(${phone[0]}${phone[1]} - ${phone[2]}${phone[3]}${phone[4]}${phone[5]}${phone[6]} - " +
@@ -240,6 +239,26 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
             return res
         }else{
             return "Invalid Phone Number"
+        }
+    }
+
+    private tailrec fun idGenerator() : String {
+        val db = this.readableDatabase
+        val lowChar = arrayOf("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","!","?","#","@","$","%","¨","&","*","+","-","/","°") //39
+        val upChar = lowChar.map{ it.uppercase() }
+        val nums = arrayOf(0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9)
+
+        val matrix = Triple(lowChar,upChar,nums)
+        val res = "${matrix.first[Random.nextInt(0,39)]}${matrix.third[Random.nextInt(0,39)]}${matrix.second[Random.nextInt(0,39)]}${matrix.third[Random.nextInt(0,39)]}" +
+                "${matrix.second[Random.nextInt(0,39)]}${matrix.first[Random.nextInt(0,39)]}${matrix.third[Random.nextInt(0,39)]}${matrix.third[Random.nextInt(0,39)]}" +
+                "${matrix.third[Random.nextInt(0,39)]}${matrix.third[Random.nextInt(0,39)]}${matrix.first[Random.nextInt(0,39)]}${matrix.second[Random.nextInt(0,39)]}"
+
+        val hashList = db.rawQuery("SELECT * FROM users WHERE id = ?", arrayOf(res))
+
+        if(hashList.count == 1){
+            return idGenerator()
+        }else{
+            return res
         }
     }
 }

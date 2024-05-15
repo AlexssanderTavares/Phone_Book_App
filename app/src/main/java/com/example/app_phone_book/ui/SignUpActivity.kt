@@ -1,4 +1,4 @@
-package com.example.app_phone_book.UI
+package com.example.app_phone_book.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -53,7 +53,7 @@ class SignUpActivity : AppCompatActivity() {
 
                     val res = db.createUser(userName,userEmail,password)
 
-                    if(res!! > 0 && res != null){
+                    if(res != null && res > 0){
                         Toast.makeText(this, getString(R.string.sign_up_ok), Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, LoginActivity::class.java))
                     }
