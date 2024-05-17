@@ -7,11 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.example.app_phone_book.Model.User
 import kotlin.random.Random
 
-class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", null, 1) {
+class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db", null, 1) {
 
     val sqlCommands = arrayOf(
         "CREATE TABLE users(id TEXT PRIMARY KEY NOT NULL, userName TEXT UNIQUE NOT NULL, userEmail TEXT NOT NULL, password TEXT NOT NULL)",
-        "CREATE TABLE contacts(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL, address TEXT",
+        "CREATE TABLE contacts(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL)",
         //"INSERT INTO users(id, userName, userMail, password) VALUES (${this.idGenerator()}, teste, teste@teste.com, teste123"
     )
 
@@ -34,7 +34,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
 
         if(this.verifyEmail(userEmail)) {
             val id = this.idGenerator()
-            contentValues.put("userId", id)
+            contentValues.put("id", id)
             contentValues.put("userName", userName)
             contentValues.put("userEmail", userEmail)
             contentValues.put("password", pass)
@@ -49,9 +49,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
                 db.close()
                 return res
             } else {
-                val res = null
                 db.close()
-                return res
+                return null
             }
         }else{
             return null
@@ -61,13 +60,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
 
     fun loginUser(userName: String, userEmail: String, userPass: String): Boolean {
         val db = this.readableDatabase
-        if(this.verifyEmail(userEmail)) {
+        return if(this.verifyEmail(userEmail)) {
             val cursor = db.rawQuery(
                 "SELECT * FROM users WHERE userName = ? AND userEmail = ? AND password = ?",
                 arrayOf(userName, userEmail, userPass)
             )
 
-            return if (cursor.count == 1) {
+            if (cursor.count == 1) {
                 db.close()
                 true
             } else {
@@ -75,11 +74,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
                 false
             }
         }else{
-            return false
+            false
         }
     }
 
-    fun selectUser(userName: String, userEmail: String) : User? {
+    fun selectUser(userName: String, userEmail: String) : User {
         val db = this.readableDatabase
         if(this.verifyEmail(userEmail)){
             val cursor = db.rawQuery("SELECT * FROM users WHERE userName = ? AND userEmail = ?", arrayOf(userName,userEmail))
@@ -91,13 +90,14 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
                 val userNameIndex = cursor.getColumnIndex("userName")
                 val userEmailIndex = cursor.getColumnIndex("userEmail")
 
-                user = User(id = cursor.getInt(idIndex), userName = cursor.getString(userNameIndex), cursor.getString(userEmailIndex))
+                user = User(cursor.getString(idIndex), cursor.getString(userNameIndex), cursor.getString(userEmailIndex))
 
             }
             db.close()
             return user
         }else{
-            return null
+            val user = User("","","")
+            return user
         }
     }
 
@@ -111,7 +111,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
         return cursor
     }
 
-    fun updateUserEmail(id: Int, newUserEmail: String): Int? {
+    fun updateUserEmail(id: Int, newUserEmail: String): Int {
         val db = writableDatabase
         val contentValues = ContentValues()
         if(this.verifyEmail(newUserEmail)) {
@@ -120,7 +120,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
             db.close()
             return cursor
         }else{
-            return null
+            return 0
         }
     }
 
@@ -130,10 +130,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
         db.close()
         return cursor
     }
-
+/*
     // Contacts CRUD
 
-    fun createContact(name: String, email: String, phone: Int, address: String = ""): Long? {
+    fun createContact(name: String, email: String, phone: Int): Long? {
         val db = this.writableDatabase
         val contentValues = ContentValues()
 
@@ -141,7 +141,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
             contentValues.put("name", name)
             contentValues.put("email", email)
             contentValues.put("phone", this.toBRPhoneFormat(phone))
-            contentValues.put("address", address)
+
 
             val cursor = db.rawQuery(
                 "SELECT * FROM contacts WHERE id = ? AND email = ? AND phone = ?",
@@ -218,7 +218,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "AppPhoneBook.db", 
     }
 
     // END of CRUDs
-
+    */
     private fun verifyEmail(email:String) : Boolean {
         return if(email.contains("@")){
             true

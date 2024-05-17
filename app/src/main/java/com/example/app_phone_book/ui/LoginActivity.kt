@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
 
         val db = DBHelper(this)
 
-        sharedPreferences = application.getSharedPreferences("login", Context.MODE_PRIVATE)
+        sharedPreferences = application.getSharedPreferences("logged", Context.MODE_PRIVATE)
 
         binding.buttonLogin.setOnClickListener {
             val loginUserName = binding.editUserName.text.toString()
