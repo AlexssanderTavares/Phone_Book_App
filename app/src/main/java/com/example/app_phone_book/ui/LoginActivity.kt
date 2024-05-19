@@ -32,6 +32,11 @@ class LoginActivity : AppCompatActivity() {
         val db = DBHelper(this)
 
         sharedPreferences = application.getSharedPreferences("logged", Context.MODE_PRIVATE)
+        val username = sharedPreferences.getString("username","")
+
+        if(username != null && username.isNotEmpty()){
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
         binding.buttonLogin.setOnClickListener {
             val loginUserName = binding.editUserName.text.toString()
@@ -48,7 +53,6 @@ class LoginActivity : AppCompatActivity() {
                         editor.putString("username", loginUserName)
                         editor.apply()
                     }
-
                     startActivity(Intent(this, MainActivity::class.java))
                 }else{
                     Toast.makeText(applicationContext,
