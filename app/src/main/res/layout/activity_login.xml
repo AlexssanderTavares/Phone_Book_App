@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="#9ECAD0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.LoginActivity">
+
+    <ImageView
+        android:src="@drawable/telephone_wpp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="40dp"
+        android:layout_alignParentTop="true"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="10dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <EditText
+            android:drawableStart="@drawable/baseline_person_24"
+            android:id="@+id/edit_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/Username"
+            android:textSize="18dp" />
+
+        <EditText
+            android:drawableStart="@drawable/baseline_person_24"
+            android:id="@+id/edit_user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/e_mail"
+            android:textSize="18dp" />
+
+        <EditText
+            android:drawableStart="@drawable/baseline_lock_24"
+            android:id="@+id/edit_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:inputType="textPassword"
+            android:hint="@string/Password"
+            android:textSize="18dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_logged"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/keep_me_logged_in" />
+
+
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/Login" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/sign_up_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/dont_have_account"
+        android:textSize="18dp" />
+
+    <TextView
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:id="@+id/recover_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sign_up_text"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:text="@string/recover_password"
+        android:textSize="18dp" />
+
+
+</RelativeLayout>

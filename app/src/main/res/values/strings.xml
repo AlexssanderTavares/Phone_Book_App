@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">App_Phone_Book</string>
+    <string name="Password">Password</string>
+    <string name="Login">Login</string>
+    <string name="Username">Username</string>
+    <string name="keep_me_logged_in">Keep me logged-in</string>
+    <string name="dont_have_account">Don\'t have account? Sign Up!</string>
+    <string name="recover_password">Don\'t remember your password?</string>
+    <string name="confPassword">Confirm Password</string>
+    <string name="therms_agreement">Do you agree with our therms and policy.</string>
+    <string name="Register">Register</string>
+    <string name="user_email">User Email</string>
+    <string name="confirm_email">Confirm Email</string>
+    <string name="e_mail_fields_doesn_t_match">E-Mail fields doesn\'t match!</string>
+    <string name="password_fields_doesn_t_match">Password fields doesn\'t match!</string>
+    <string name="no_blank_fields_allowed">No Blank fields allowed!</string>
+    <string name="sign_up_ok">Sign-Up Ok!</string>
+    <string name="you_must_agree_with_our_therms_and_policy">You must agree with our Therms and Policy</string>
+    <string name="you_must_fill_the_fields_in_order_to_be_able_to_login">You must fill the fields in order to be able to login</string>
+    <string name="e_mail">E-Mail</string>
+    <string name="user_not_already_registered">User not already registered!</string>
 </resources>
