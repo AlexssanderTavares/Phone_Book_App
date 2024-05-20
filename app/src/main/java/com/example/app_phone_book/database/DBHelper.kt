@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.app_phone_book.Model.Contact
 import com.example.app_phone_book.Model.User
 import kotlin.random.Random
 
@@ -11,8 +12,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
 
     val sqlCommands = arrayOf(
         "CREATE TABLE users(id TEXT PRIMARY KEY NOT NULL, userName TEXT UNIQUE NOT NULL, userEmail TEXT NOT NULL, password TEXT NOT NULL)",
-        "CREATE TABLE contacts(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL)",
-        //"INSERT INTO users(id, userName, userMail, password) VALUES (${this.idGenerator()}, teste, teste@teste.com, teste123"
+        "CREATE TABLE contacts(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL, imageId INTEGER)",
+        "INSERT INTO users(id, userName, userEmail, password) VALUES ('############','admin','admin@admin.com','admin123')",
+        "INSERT INTO contacts(name, email, phone, imageId) VALUES ('teste','testeCont@teste.com','(00)00000-0000',1)",
+        "INSERT INTO contacts(name, email, phone, imageId) VALUES ('teste2','testeCont2@teste.com','(11)11111-1111',2)",
     )
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -25,8 +28,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
         onCreate(db!!)
     }
 
-
-    // User CRUD
+    // ---------------------------------------------------------------------------------
+    //                                  Users CRUD
+    // ---------------------------------------------------------------------------------
 
     fun createUser(userName: String, userEmail: String, pass: String): Long? {
         val db = this.writableDatabase
@@ -130,8 +134,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
         db.close()
         return cursor
     }
-/*
-    // Contacts CRUD
+    // ---------------------------------------------------------------------------------
+    //                                  Contacts CRUD
+    // ---------------------------------------------------------------------------------
 
     fun createContact(name: String, email: String, phone: Int): Long? {
         val db = this.writableDatabase
@@ -178,6 +183,57 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
         }
     }
 
+    fun selectContact(name: String, email: String, phone: Int) : Contact {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM contacts WHERE name = ? AND email = ? AND phone = ?", arrayOf(name,email,this.toBRPhoneFormat(phone)))
+        lateinit var contact: Contact
+
+        if(cursor.count == 1){
+            val idIndex = cursor.getColumnIndex("id")
+            val nameIndex = cursor.getColumnIndex("name")
+            val emailIndex = cursor.getColumnIndex("email")
+            val phoneIndex = cursor.getColumnIndex("phone")
+            val imageId = cursor.getColumnIndex("imageId")
+
+            contact = Contact(cursor.getInt(idIndex), cursor.getString(nameIndex),cursor.getString(emailIndex), cursor.getString(phoneIndex), cursor.getInt(imageId))
+            db.close()
+            return contact
+        }else{
+            contact = Contact(0,"","","")
+            db.close()
+            return contact
+        }
+    }
+
+    fun getAllContact(): ArrayList<Contact> {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM contacts", null)
+        val listContact = ArrayList<Contact>()
+
+        if(cursor.count > 0){
+            cursor.moveToFirst()
+            val idIndex = cursor.getColumnIndex("id")
+            val nameIndex = cursor.getColumnIndex("name")
+            val emailIndex = cursor.getColumnIndex("email")
+            val phoneIndex = cursor.getColumnIndex("phone")
+            val imageId = cursor.getColumnIndex("imageId")
+
+            do{
+                val contact = Contact(
+                    cursor.getInt(idIndex),
+                    cursor.getString(nameIndex),
+                    cursor.getString(emailIndex),
+                    cursor.getString(phoneIndex),
+                    cursor.getInt(imageId)
+                )
+
+                listContact.add(contact)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return listContact
+    }
+
     fun updateContactNumber(id: Int, newPhone: Int) : Int {
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -218,7 +274,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
     }
 
     // END of CRUDs
-    */
+
     private fun verifyEmail(email:String) : Boolean {
         return if(email.contains("@")){
             true
