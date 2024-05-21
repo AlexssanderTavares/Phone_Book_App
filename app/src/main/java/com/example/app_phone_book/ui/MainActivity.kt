@@ -8,8 +8,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_phone_book.Model.Contact
 import com.example.app_phone_book.R
+import com.example.app_phone_book.adapter.ContactsRecyclerViewAdapter
 import com.example.app_phone_book.database.DBHelper
 import com.example.app_phone_book.databinding.ActivityMainBinding
 
@@ -34,7 +36,12 @@ class MainActivity : AppCompatActivity() {
         adapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, contacts)
 
         sharedPreferences = application.getSharedPreferences("login", MODE_PRIVATE)
-        binding.listViewContacts.adapter = adapter
+        //binding.listViewContacts.adapter = adapter
+
+        binding.contactRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.contactRecyclerView.adapter = ContactsRecyclerViewAdapter(db.getAllContact(), ContactsRecyclerViewAdapter.OnClickListener{
+            startActivity(Intent(this, ContactActivity::class.java))
+        })
 
         binding.buttonLogout.setOnClickListener {
             val editor: SharedPreferences.Editor = sharedPreferences.edit()
