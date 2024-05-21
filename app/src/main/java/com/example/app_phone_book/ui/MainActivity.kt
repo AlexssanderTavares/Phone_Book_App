@@ -1,5 +1,6 @@
 package com.example.app_phone_book.ui
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -40,6 +41,10 @@ class MainActivity : AppCompatActivity() {
             editor.putString("username", "")
             editor.apply()
             finish()
+        }
+
+        binding.buttonAdd.setOnClickListener{
+            startActivity(Intent(this, NewContactActivity::class.java))
         }
     }
 }
