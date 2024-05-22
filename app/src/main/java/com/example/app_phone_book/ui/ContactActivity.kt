@@ -1,6 +1,7 @@
 package com.example.app_phone_book.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -38,9 +39,66 @@ class ContactActivity : AppCompatActivity() {
             //binding.contactImage.setImageResource()
         }
 
+        val oldName = contact.name
+        val oldEmail = contact.email
+        val oldPhone = contact.phone
 
+        binding.buttonEditContact.setOnClickListener{
+            if(id != null) {
+                contact = db.selectContact(id)
+
+                val newName = binding.contactName.text.toString().trim()
+                val newEmail = binding.contactEmail.text.toString().trim()
+                val newPhone = binding.contactPhone.text.toString().trim()
+
+                if(oldName != newName && newName.isNotEmpty()){
+                    val res = db.updateContactName(id, newName)
+                    if(res > 0) {
+                        setResult(1, i)
+                    }else{
+                        setResult(0,i)
+                    }
+                }
+
+                if(oldEmail != newEmail && newEmail.isNotEmpty()){
+                    val res = db.updateContactEmail(id, newEmail)
+                    if(res != null && res > 0){
+                        setResult(1,i)
+                    }else{
+                        setResult(0,i)
+                    }
+                }
+
+                if(oldPhone.toString() != newPhone && newPhone.isNotEmpty()){
+                    val res = db.updateContactNumber(id, newPhone.toInt())
+                    if(res > 0) {
+                        setResult(1, i)
+                    }else{
+                        setResult(0,i)
+                    }
+                }
+
+                Toast.makeText(applicationContext,"Update Ok!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+
+        binding.deleteContact.setOnClickListener{
+            if(id != null){
+                val res = db.deleteContact(id)
+                if(res > 0){
+                    setResult(1,i)
+                    Toast.makeText(applicationContext, "Contact Deleted", Toast.LENGTH_SHORT).show()
+                    finish()
+                }else{
+                    setResult(0,i)
+                    finish()
+                }
+            }
+        }
 
         binding.cancelEditContact.setOnClickListener{
+            setResult(0,i)
             finish()
         }
     }

@@ -1,6 +1,5 @@
 package com.example.app_phone_book.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -42,12 +41,11 @@ class NewContactActivity : AppCompatActivity() {
                 if(res != null && res > 0) {
                     Toast.makeText(applicationContext, "Contact successfully created", Toast.LENGTH_SHORT).show()
                     setResult(1,i)
-                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
                 }else{
                     Toast.makeText(applicationContext, "Invalid email/phone number or contact exists", Toast.LENGTH_SHORT).show()
-                    binding.newContactName.setText("")
-                    binding.newContactEmail.setText("")
-                    binding.newContactPhone.setText("")
+                    setResult(0,i)
+                    finish()
                 }
             }
         }

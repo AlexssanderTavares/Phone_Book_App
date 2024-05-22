@@ -11,10 +11,11 @@
     tools:context=".ui.ContactActivity">
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@color/white"
+        android:layout_margin="12dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -50,23 +51,32 @@
             android:textSize="18sp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button_edit_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="12sp"
+                android:layout_margin="5sp"
                 android:text="Edit Contact" />
+
+            <Button
+                android:id="@+id/delete_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:text="Delete" />
 
             <Button
                 android:id="@+id/cancel_edit_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="12sp"
+                android:layout_margin="5sp"
                 android:text="Cancel" />
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

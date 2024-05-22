@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         db = DBHelper(this)
         binding.contactRecyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = ContactsRecyclerViewAdapter(db.getAllContact(), ContactsRecyclerViewAdapter.OnClickListener{
-            startActivity(Intent(this, ContactActivity::class.java))
+            result.launch(Intent(this, ContactActivity::class.java))
         })
         binding.contactRecyclerView.adapter = adapter
     }
