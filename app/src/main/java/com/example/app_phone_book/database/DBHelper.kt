@@ -183,9 +183,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
         }
     }
 
-    fun selectContact(name: String, email: String, phone: Int) : Contact {
+    fun selectContact(id: Int) : Contact {
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM contacts WHERE name = ? AND email = ? AND phone = ?", arrayOf(name,email,this.toBRPhoneFormat(phone)))
+        val cursor = db.rawQuery("SELECT * FROM contacts WHERE id = ?", arrayOf(id.toString()))
         lateinit var contact: Contact
 
         if(cursor.count == 1){
@@ -195,11 +195,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
             val phoneIndex = cursor.getColumnIndex("phone")
             val imageId = cursor.getColumnIndex("imageId")
 
-            contact = Contact(cursor.getInt(idIndex), cursor.getString(nameIndex),cursor.getString(emailIndex), cursor.getString(phoneIndex), cursor.getInt(imageId))
+            contact = Contact(cursor.getInt(idIndex), cursor.getString(nameIndex),cursor.getString(emailIndex), cursor.getInt(phoneIndex), cursor.getInt(imageId))
             db.close()
             return contact
         }else{
-            contact = Contact(0,"","","")
+            contact = Contact(0,"","",0)
             db.close()
             return contact
         }
@@ -223,7 +223,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
                     cursor.getInt(idIndex),
                     cursor.getString(nameIndex),
                     cursor.getString(emailIndex),
-                    cursor.getString(phoneIndex),
+                    cursor.getInt(phoneIndex),
                     cursor.getInt(imageId)
                 )
 

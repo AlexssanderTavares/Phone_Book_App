@@ -4,7 +4,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var adapter: ArrayAdapter<Contact>
+    private lateinit var result: ActivityResultLauncher<Intent>
+    private lateinit var db: DBHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,17 +36,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val db = DBHelper(this)
-        val contacts = db.getAllContact()
-        adapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, contacts)
-
         sharedPreferences = application.getSharedPreferences("login", MODE_PRIVATE)
-        //binding.listViewContacts.adapter = adapter
 
-        binding.contactRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.contactRecyclerView.adapter = ContactsRecyclerViewAdapter(db.getAllContact(), ContactsRecyclerViewAdapter.OnClickListener{
-            startActivity(Intent(this, ContactActivity::class.java))
-        })
+        loadContacts()
 
         binding.buttonLogout.setOnClickListener {
             val editor: SharedPreferences.Editor = sharedPreferences.edit()
@@ -51,7 +48,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.buttonAdd.setOnClickListener{
-            startActivity(Intent(this, NewContactActivity::class.java))
+            result.launch(Intent(this, NewContactActivity::class.java))
         }
+
+        result = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.data != null && it.resultCode == 1){
+                adapter.notifyDataSetChanged()
+            }else if(it.data != null && it.resultCode == 0){
+                Toast.makeText(applicationContext, "Operation canceled!", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(applicationContext, "Operation failed", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    fun loadContacts(){
+        db = DBHelper(this)
+        binding.contactRecyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = ContactsRecyclerViewAdapter(db.getAllContact(), ContactsRecyclerViewAdapter.OnClickListener{
+            startActivity(Intent(this, ContactActivity::class.java))
+        })
+        binding.contactRecyclerView.adapter = adapter
     }
 }
