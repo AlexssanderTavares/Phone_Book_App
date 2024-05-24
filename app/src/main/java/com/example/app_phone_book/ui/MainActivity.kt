@@ -3,7 +3,6 @@ package com.example.app_phone_book.ui
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.app_phone_book.Model.Contact
 import com.example.app_phone_book.R
 import com.example.app_phone_book.adapter.ContactsRecyclerViewAdapter
 import com.example.app_phone_book.database.DBHelper
@@ -22,8 +20,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var adapter: ArrayAdapter<Contact>
-    private lateinit var result: ActivityResultLauncher<Intent>
+    //private lateinit var adapter: ArrayAdapter<Contact>
+    private lateinit var resultAdd: ActivityResultLauncher<Intent>
+    private lateinit var resultLoad: ActivityResultLauncher<Intent>
     private lateinit var db: DBHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +37,12 @@ class MainActivity : AppCompatActivity() {
 
         sharedPreferences = application.getSharedPreferences("login", MODE_PRIVATE)
 
-        loadContacts()
+        db = DBHelper(this)
+        binding.contactRecyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = ContactsRecyclerViewAdapter(db.getAllContact(), ContactsRecyclerViewAdapter.OnClickListener{
+            resultLoad.launch(Intent(this, ContactActivity::class.java))
+        })
+        binding.contactRecyclerView.adapter = adapter
 
         binding.buttonLogout.setOnClickListener {
             val editor: SharedPreferences.Editor = sharedPreferences.edit()
@@ -48,10 +52,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.buttonAdd.setOnClickListener{
-            result.launch(Intent(this, NewContactActivity::class.java))
+            resultAdd.launch(Intent(this, NewContactActivity::class.java))
         }
 
-        result = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        resultAdd = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.data != null && it.resultCode == 1){
                 adapter.notifyDataSetChanged()
             }else if(it.data != null && it.resultCode == 0){
@@ -61,12 +65,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    fun loadContacts(){
-        db = DBHelper(this)
-        binding.contactRecyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = ContactsRecyclerViewAdapter(db.getAllContact(), ContactsRecyclerViewAdapter.OnClickListener{
-            result.launch(Intent(this, ContactActivity::class.java))
-        })
-        binding.contactRecyclerView.adapter = adapter
-    }
+
 }

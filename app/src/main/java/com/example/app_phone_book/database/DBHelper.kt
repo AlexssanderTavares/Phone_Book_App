@@ -138,19 +138,19 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
     //                                  Contacts CRUD
     // ---------------------------------------------------------------------------------
 
-    fun createContact(name: String, email: String, phone: Int): Long? {
+    fun createContact(name: String, email: String, phone: String): Long? {
         val db = this.writableDatabase
         val contentValues = ContentValues()
 
         if(this.verifyEmail(email)) {
             contentValues.put("name", name)
             contentValues.put("email", email)
-            contentValues.put("phone", this.toBRPhoneFormat(phone))
+            contentValues.put("phone", phone)
 
 
             val cursor = db.rawQuery(
-                "SELECT * FROM contacts WHERE id = ? AND email = ? AND phone = ?",
-                arrayOf(email, this.toBRPhoneFormat(phone))
+                "SELECT * FROM contacts WHERE email = ? AND phone = ?",
+                arrayOf(email, phone)
             )
 
             if (cursor.count == 0) {
@@ -167,11 +167,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
         }
     }
 
-    fun getContact(id: Int, name: String, email: String, phone: Int): Boolean {
+    fun getContact(id: Int, name: String, email: String, phone: String): Boolean {
         val db = this.readableDatabase
         val cursor = db.rawQuery(
             "SELECT * FROM contacts WHERE id = ? AND name = ? AND email = ? AND phone = ?",
-            arrayOf(id.toString(), name, email, this.toBRPhoneFormat(phone))
+            arrayOf(id.toString(), name, email, phone)
         )
 
         return if (cursor.count == 1) {
@@ -195,11 +195,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
             val phoneIndex = cursor.getColumnIndex("phone")
             val imageId = cursor.getColumnIndex("imageId")
 
-            contact = Contact(cursor.getInt(idIndex), cursor.getString(nameIndex),cursor.getString(emailIndex), cursor.getInt(phoneIndex), cursor.getInt(imageId))
+            contact = Contact(cursor.getInt(idIndex), cursor.getString(nameIndex),cursor.getString(emailIndex), cursor.getString(phoneIndex), cursor.getInt(imageId))
             db.close()
             return contact
         }else{
-            contact = Contact(0,"","",0)
+            contact = Contact(0,"","","")
             db.close()
             return contact
         }
@@ -223,7 +223,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
                     cursor.getInt(idIndex),
                     cursor.getString(nameIndex),
                     cursor.getString(emailIndex),
-                    cursor.getInt(phoneIndex),
+                    cursor.getString(phoneIndex),
                     cursor.getInt(imageId)
                 )
 
@@ -234,10 +234,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
         return listContact
     }
 
-    fun updateContactNumber(id: Int, newPhone: Int) : Int {
+    fun updateContactNumber(id: Int, newPhone: String) : Int {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put("newPhone", toBRPhoneFormat(newPhone))
+        contentValues.put("newPhone", newPhone)
         val cursor = db.update("contacts", contentValues, "id = ?", arrayOf(id.toString()))
         db.close()
         return cursor
@@ -283,20 +283,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
         }
     }
 
-    private fun toBRPhoneFormat(phone: Int) : String {
-        val phone = phone.toString()
-        if (phone.length == 11) {
-            val res = "(${phone[0]}${phone[1]} - ${phone[2]}${phone[3]}${phone[4]}${phone[5]}${phone[6]} - " +
-                    "${phone[7]}${phone[8]}${phone[9]}${phone[10]}"
-            return res
-        }else if(phone.length == 10){
-            val res = "(${phone[0]}${phone[1]} - ${phone[2]}${phone[3]}${phone[4]}${phone[5]} - ${phone[6]}" +
-                    "${phone[7]}${phone[8]}${phone[9]}"
-            return res
-        }else{
-            return "Invalid Phone Number"
-        }
-    }
+
 
     private tailrec fun idGenerator() : String {
         val db = this.readableDatabase

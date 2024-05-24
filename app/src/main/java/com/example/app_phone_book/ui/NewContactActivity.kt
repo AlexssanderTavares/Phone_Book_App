@@ -37,7 +37,7 @@ class NewContactActivity : AppCompatActivity() {
 
             if (name.isNotEmpty() && email.isNotEmpty() && phone.isNotEmpty()){
 
-                val res = db.createContact(name,email,phone.toInt())
+                val res = db.createContact(name,email, this.phoneFormater(phone))
                 if(res != null && res > 0) {
                     Toast.makeText(applicationContext, "Contact successfully created", Toast.LENGTH_SHORT).show()
                     setResult(1,i)
@@ -53,6 +53,20 @@ class NewContactActivity : AppCompatActivity() {
         binding.cancelCreateContact.setOnClickListener{
             setResult(0,i)
             finish()
+        }
+    }
+
+    private fun phoneFormater(phone: String) : String {
+        if (phone.length == 11) {
+            val res = "(${phone[0]}${phone[1]})  ${phone[2]}${phone[3]}${phone[4]}${phone[5]}${phone[6]} - " +
+                    "${phone[7]}${phone[8]}${phone[9]}${phone[10]}"
+            return res
+        }else if(phone.length == 10){
+            val res = "(${phone[0]}${phone[1]})  ${phone[2]}${phone[3]}${phone[4]}${phone[5]} - ${phone[6]}" +
+                    "${phone[7]}${phone[8]}${phone[9]}"
+            return res
+        }else{
+            return "Invalid Phone Number"
         }
     }
 }

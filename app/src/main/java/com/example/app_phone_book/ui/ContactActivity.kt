@@ -70,7 +70,7 @@ class ContactActivity : AppCompatActivity() {
                 }
 
                 if(oldPhone.toString() != newPhone && newPhone.isNotEmpty()){
-                    val res = db.updateContactNumber(id, newPhone.toInt())
+                    val res = db.updateContactNumber(id, newPhone)
                     if(res > 0) {
                         setResult(1, i)
                     }else{
