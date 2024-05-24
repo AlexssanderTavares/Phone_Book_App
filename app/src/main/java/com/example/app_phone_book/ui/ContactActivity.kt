@@ -45,7 +45,6 @@ class ContactActivity : AppCompatActivity() {
 
         binding.buttonEditContact.setOnClickListener{
             if(id != null) {
-                contact = db.selectContact(id)
 
                 val newName = binding.contactName.text.toString().trim()
                 val newEmail = binding.contactEmail.text.toString().trim()
@@ -56,25 +55,25 @@ class ContactActivity : AppCompatActivity() {
                     if(res > 0) {
                         setResult(1, i)
                     }else{
-                        setResult(0,i)
+                        setResult(-1,i)
                     }
                 }
 
                 if(oldEmail != newEmail && newEmail.isNotEmpty()){
                     val res = db.updateContactEmail(id, newEmail)
                     if(res != null && res > 0){
-                        setResult(1,i)
+                        setResult(2,i)
                     }else{
-                        setResult(0,i)
+                        setResult(-2,i)
                     }
                 }
 
                 if(oldPhone.toString() != newPhone && newPhone.isNotEmpty()){
                     val res = db.updateContactNumber(id, newPhone)
                     if(res > 0) {
-                        setResult(1, i)
+                        setResult(3, i)
                     }else{
-                        setResult(0,i)
+                        setResult(-3,i)
                     }
                 }
 

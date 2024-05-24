@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:hint="New Contact Name"
+            android:hint="Update Contact Name"
             android:textSize="18sp" />
 
         <EditText
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:hint="New Contact Email"
+            android:hint="Update Contact Email"
             android:textSize="18sp" />
 
         <EditText
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:hint="New Contact Phone Number"
+            android:hint="New Phone Number"
             android:textSize="18sp" />
 
         <LinearLayout
