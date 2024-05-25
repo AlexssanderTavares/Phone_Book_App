@@ -26,11 +26,11 @@ class ContactActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        db = DBHelper(applicationContext)
+        db = DBHelper(this)
         val i = intent
         val id = i.extras?.getInt("id")
 
-        if(id != null) {
+        if(id != null && id > -1) {
             contact = db.selectContact(id)
 
             binding.contactName.setText(contact.name)

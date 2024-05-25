@@ -187,15 +187,26 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM contacts WHERE id = ?", arrayOf(id.toString()))
         lateinit var contact: Contact
+        /*
+        This solves the problem of cursor.getPosition returning -1
+        We must move the cursor manually to the first row founded
+        val counter = cursor.getCount() // returns the number of rows founded
+        val position = cursor.getPosition() // -1 // return the current cursor position in the list
+        if(position == -1){
+           val moved = cursor.moveToFirst() // true, moved to the first row founded
+        }
+        val isClose = cursor.isClosed() // check if the cursor is closed
 
-        if(cursor.count == 1){
+         */
+
+        if(cursor.count == 1 && cursor.moveToFirst()){ // if moveToFirst find a row to move on as first position, it will return true
             val idIndex = cursor.getColumnIndex("id")
             val nameIndex = cursor.getColumnIndex("name")
             val emailIndex = cursor.getColumnIndex("email")
             val phoneIndex = cursor.getColumnIndex("phone")
             val imageId = cursor.getColumnIndex("imageId")
 
-            contact = Contact(cursor.getInt(idIndex), cursor.getString(nameIndex),cursor.getString(emailIndex), cursor.getString(phoneIndex), cursor.getInt(imageId))
+            contact = Contact(cursor.getInt(idIndex), cursor.getString(nameIndex), cursor.getString(emailIndex), cursor.getString(phoneIndex), cursor.getInt(imageId))
             db.close()
             return contact
         }else{
