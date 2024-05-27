@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
-    //private lateinit var adapter: ArrayAdapter<Contact>
+    private lateinit var adapter: ContactsRecyclerViewAdapter
     private lateinit var resultAdd: ActivityResultLauncher<Intent>
     private lateinit var resultLoad: ActivityResultLauncher<Intent>
     private lateinit var db: DBHelper
@@ -38,13 +38,8 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences = application.getSharedPreferences("login", MODE_PRIVATE)
 
         db = DBHelper(this)
-        binding.contactRecyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = ContactsRecyclerViewAdapter(db.getAllContact(), ContactsRecyclerViewAdapter.OnClickListener{
-            val contactActivity = Intent(this, ContactActivity::class.java)
-            contactActivity.putExtra("id", it.id)
-            resultLoad.launch(contactActivity)
-        })
-        binding.contactRecyclerView.adapter = adapter
+        this.recyclerViewLoad()
+        binding.contactRecyclerView.adapter = this.adapter
 
         binding.buttonLogout.setOnClickListener {
             val editor: SharedPreferences.Editor = sharedPreferences.edit()
@@ -59,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         resultAdd = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.data != null && it.resultCode == 1){
-                adapter.notifyDataSetChanged()
+               this.recyclerViewLoad()
             }else if(it.data != null && it.resultCode == 0){
                 Toast.makeText(applicationContext, "Operation canceled!", Toast.LENGTH_SHORT).show()
             }else{
@@ -70,12 +65,9 @@ class MainActivity : AppCompatActivity() {
         resultLoad = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.data != null){
                 when(it.resultCode){
-                    1 -> adapter.notifyDataSetChanged()
-                    2 -> adapter.notifyDataSetChanged()
-                    3 -> adapter.notifyDataSetChanged()
-                    -1 -> Toast.makeText(applicationContext, "Name Not Changed", Toast.LENGTH_SHORT).show()
-                    -2 -> Toast.makeText(applicationContext, "Phone Not Changed", Toast.LENGTH_SHORT).show()
-                    -3 -> Toast.makeText(applicationContext, "Email Not Changed", Toast.LENGTH_SHORT).show()
+                    1 -> this.recyclerViewLoad()
+                    2 -> this.recyclerViewLoad()
+                    3 -> this.recyclerViewLoad()
                     0 -> Toast.makeText(applicationContext, "Operation canceled! Nothing has been changed", Toast.LENGTH_SHORT).show()
                     else -> {
                         Toast.makeText(applicationContext, "Operation failed! Nothing has been changed", Toast.LENGTH_SHORT).show()
@@ -84,6 +76,33 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+
     }
+    override fun onResume() {
+        super.onResume()
+        this.recyclerViewLoad()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        this.recyclerViewLoad()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        this.recyclerViewLoad()
+    }
+
+    fun recyclerViewLoad() {
+        binding.contactRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = ContactsRecyclerViewAdapter(db.getAllContact(), ContactsRecyclerViewAdapter.OnClickListener{
+            val contactActivity = Intent(this, ContactActivity::class.java)
+            contactActivity.putExtra("id", it.id)
+            resultLoad.launch(contactActivity)
+        })
+        adapter.notifyDataSetChanged()
+    }
+
+
 
 }

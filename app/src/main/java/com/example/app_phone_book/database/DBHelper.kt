@@ -248,7 +248,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
     fun updateContactNumber(id: Int, newPhone: String) : Int {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put("newPhone", newPhone)
+        contentValues.put("phone", newPhone)
         val cursor = db.update("contacts", contentValues, "id = ?", arrayOf(id.toString()))
         db.close()
         return cursor
@@ -257,7 +257,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
     fun updateContactName(id: Int, newName: String) : Int {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put("newName", newName)
+        contentValues.put("name", newName)
         val cursor = db.update("contacts", contentValues, "id = ?", arrayOf(id.toString()))
         db.close()
         return cursor
@@ -267,7 +267,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "App_Phone_Book.db"
         val db = this.writableDatabase
         if(this.verifyEmail(newEmail)){
             val contentValues = ContentValues()
-            contentValues.put("newEmail", newEmail)
+            contentValues.put("email", newEmail)
             val cursor = db.update("contacts", contentValues, "id = ?", arrayOf(id.toString()))
             db.close()
             return cursor

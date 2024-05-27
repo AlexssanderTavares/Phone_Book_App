@@ -54,8 +54,6 @@ class ContactActivity : AppCompatActivity() {
                     val res = db.updateContactName(id, newName)
                     if(res > 0) {
                         setResult(1, i)
-                    }else{
-                        setResult(-1,i)
                     }
                 }
 
@@ -63,17 +61,13 @@ class ContactActivity : AppCompatActivity() {
                     val res = db.updateContactEmail(id, newEmail)
                     if(res != null && res > 0){
                         setResult(2,i)
-                    }else{
-                        setResult(-2,i)
                     }
                 }
 
-                if(oldPhone.toString() != newPhone && newPhone.isNotEmpty()){
+                if(oldPhone != newPhone && newPhone.isNotEmpty()){
                     val res = db.updateContactNumber(id, newPhone)
                     if(res > 0) {
                         setResult(3, i)
-                    }else{
-                        setResult(-3,i)
                     }
                 }
 
