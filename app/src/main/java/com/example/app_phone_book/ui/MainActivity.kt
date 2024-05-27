@@ -78,20 +78,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    override fun onResume() {
-        super.onResume()
-        this.recyclerViewLoad()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        this.recyclerViewLoad()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        this.recyclerViewLoad()
-    }
 
     fun recyclerViewLoad() {
         binding.contactRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -100,6 +86,7 @@ class MainActivity : AppCompatActivity() {
             contactActivity.putExtra("id", it.id)
             resultLoad.launch(contactActivity)
         })
+        binding.contactRecyclerView.adapter = this.adapter
         adapter.notifyDataSetChanged()
     }
 
