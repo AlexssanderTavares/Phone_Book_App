@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         db = DBHelper(this)
         this.recyclerViewLoad()
-        binding.contactRecyclerView.adapter = this.adapter
+
 
         binding.buttonLogout.setOnClickListener {
             val editor: SharedPreferences.Editor = sharedPreferences.edit()
