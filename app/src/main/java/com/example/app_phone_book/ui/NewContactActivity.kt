@@ -1,9 +1,14 @@
 package com.example.app_phone_book.ui
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app_phone_book.R
@@ -13,6 +18,7 @@ import com.example.app_phone_book.databinding.ActivityNewContactBinding
 class NewContactActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNewContactBinding
+    private lateinit var imageResult: ActivityResultLauncher<Intent>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,8 +32,14 @@ class NewContactActivity : AppCompatActivity() {
         val i = intent
         val db = DBHelper(this)
 
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
+            requestGalleryPermission()
+        }
+
         binding.newContactImage.setOnClickListener{
-            //"Implement image picker"
+            if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED){
+                imageResult.launch(Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
+            }
         }
 
         binding.buttonCreateContact.setOnClickListener{
@@ -69,4 +81,9 @@ class NewContactActivity : AppCompatActivity() {
             return "Invalid Phone Number"
         }
     }
+
+    private fun requestGalleryPermission(){
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES), PackageManager.PERMISSION_GRANTED)
+    }
+
 }
