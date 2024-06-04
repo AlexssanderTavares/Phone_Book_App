@@ -3,9 +3,11 @@ package com.example.app_phone_book.ui
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -32,6 +34,7 @@ class NewContactActivity : AppCompatActivity() {
         val i = intent
         val db = DBHelper(this)
 
+        //-----------------------------------IMAGE CONTEXT----------------------------------------
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
             requestGalleryPermission()
         }
@@ -41,6 +44,18 @@ class NewContactActivity : AppCompatActivity() {
                 imageResult.launch(Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
             }
         }
+
+        imageResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode != null && it.resultCode == RESULT_OK){
+                val uri = it.data?.data
+                val uriAddress = uri.toString()
+                val bitmap = MediaStore.Images.Media.getContentUri(uriAddress)
+            }else{
+
+            }
+        }
+
+        //-----------------------------------IMAGE CONTEXT----------------------------------------
 
         binding.buttonCreateContact.setOnClickListener{
             val name = binding.newContactName.text.toString().trim()
