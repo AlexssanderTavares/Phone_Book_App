@@ -3,14 +3,11 @@ package com.example.app_phone_book.ui
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app_phone_book.R
@@ -18,7 +15,9 @@ import com.example.app_phone_book.database.DBHelper
 import com.example.app_phone_book.databinding.ActivityNewContactBinding
 
 class NewContactActivity : AppCompatActivity() {
-
+    companion object{
+        const val REQUEST_IMAGE_PICK = 1
+    }
     private lateinit var binding: ActivityNewContactBinding
     private lateinit var imageResult: ActivityResultLauncher<Intent>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,12 +34,16 @@ class NewContactActivity : AppCompatActivity() {
         val db = DBHelper(this)
 
         //-----------------------------------IMAGE CONTEXT----------------------------------------
-        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
+
+
+        /*if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
             requestGalleryPermission()
+        }else {
+            Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show()
         }
 
         binding.newContactImage.setOnClickListener{
-            if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED && Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE){
                 imageResult.launch(Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
             }
         }
@@ -48,12 +51,15 @@ class NewContactActivity : AppCompatActivity() {
         imageResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.resultCode != null && it.resultCode == RESULT_OK){
                 val uri = it.data?.data
-                val uriAddress = uri.toString()
-                val bitmap = MediaStore.Images.Media.getContentUri(uriAddress)
+                binding.newContactImage.setImageURI(uri)
             }else{
-
+                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
+
+        //For some unknown reason, OpenGLRenderer is Unable to match the desired swap behavior and
+        //Uri$HierarchicalUri is not matching the desired file mapping path
+        //Lots of ways of getting Image Result is deprecated and not recommended to be used anymore, so It will be implemented later with some actual image processing method, like a composable
 
         //-----------------------------------IMAGE CONTEXT----------------------------------------
 
