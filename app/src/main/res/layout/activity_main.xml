@@ -3,41 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/appLogoBG"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/appLogoBG"
     tools:context=".ui.MainActivity">
-    <!---
-    <ListView
-        android:id="@+id/list_view_contacts"
-        android:layout_margin="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/> -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contact_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp" />
 
+    <!---
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:contentDescription="Next Contact"
         android:id="@+id/button_arrow_down"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:src="@drawable/baseline_arrow_downward_24"/>
+        -->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button_logout"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="8dp"
-        android:src="@drawable/baseline_logout_24"
-        />
+        android:contentDescription="Logoff"
+        android:src="@drawable/baseline_logout_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add"
@@ -46,8 +42,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/baseline_add_24"/>
+        android:contentDescription="Add Contact"
+        android:src="@drawable/baseline_add_24" />
 
-   
 
 </RelativeLayout>

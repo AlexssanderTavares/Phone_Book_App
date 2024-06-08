@@ -3,58 +3,108 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@color/appLogoBG"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/appLogoBG"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".ui.ContactActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/white"
         android:layout_margin="12dp"
+        android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_margin="15sp"
+            android:contentDescription="Back to Contacts"
+            android:src="@drawable/baseline_arrow_back_24" />
 
         <ImageView
             android:id="@+id/contact_image"
             android:layout_width="130dp"
             android:layout_height="120dp"
             android:layout_margin="12dp"
-            android:src="@drawable/baseline_add_a_photo_24" />
+            android:enabled="false"
+            android:src="@drawable/baseline_person_24" />
 
         <EditText
             android:id="@+id/contact_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
+            android:enabled="false"
             android:hint="Update Contact Name"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/contact_email"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/contact_email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:layout_margin="12dp"
+            android:enabled="false"
             android:hint="Update Contact Email"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/contact_phone"
+        <ImageView
+            android:id="@+id/send_email_button"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_email_24" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:hint="New Phone Number"
-            android:textSize="18sp" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/contact_phone"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:enabled="false"
+                android:hint="New Phone Number"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/call_button"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/baseline_local_phone_24" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/confirm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:text="Confirm Edit"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/button_edit_contact"
@@ -70,12 +120,21 @@
                 android:layout_margin="5sp"
                 android:text="Delete" />
 
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:text="Cancel" />
+
             <Button
                 android:id="@+id/cancel_edit_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5sp"
-                android:text="Cancel" />
+                android:text="Cancel Edit"
+                android:visibility="gone" />
 
         </LinearLayout>
     </LinearLayout>
