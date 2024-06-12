@@ -18,11 +18,14 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/new_contact_image"
             android:layout_width="130dp"
-            android:layout_height="120dp"
+            android:layout_height="130dp"
             android:layout_margin="12dp"
+            app:shapeAppearanceOverlay="@style/circular"
+            app:strokeColor="@color/black"
+            app:strokeWidth="5dp"
             android:src="@drawable/baseline_add_a_photo_24" />
 
         <EditText
