@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_phone_book.Model.Contact
 import com.example.app_phone_book.R
 
-class ContactsRecyclerViewAdapter(var contactsList: ArrayList<Contact>, val onClickListener: OnClickListener) : RecyclerView.Adapter<ContactsRecyclerViewAdapter.ContactsViewHolder>() {
+class ContactsRecyclerViewAdapter(var contactsList: List<Contact>, val onClickListener: OnClickListener) : RecyclerView.Adapter<ContactsRecyclerViewAdapter.ContactsViewHolder>() {
 
     class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val contactImage: ImageView = itemView.findViewById(R.id.contact_image)
